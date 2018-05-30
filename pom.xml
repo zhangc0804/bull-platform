@@ -11,6 +11,7 @@
 
     <modules>
         <module>bull-parent</module>
+        <module>bull-web</module>
     </modules>
 
 </project>
