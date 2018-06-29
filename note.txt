@@ -89,5 +89,59 @@ SpringBoot学习笔记
     也可以通过使用@Import注解导入额外的配置类
 6.2、导入XML配置
     使用 @ImportResource注解添加额外的XML配置
+---------------------------------------2018-06-27---------------------------------------
 7、自动配置
+    Springboot自动配置会根据添加的jar包尝试自动配置Spring应用程序。
+7.1、自定义配置
+    Springboot的自动配置是无侵入式的，任何时候，可用通过定义自己的配置来覆盖掉自动配置。比如定义了一个
+Datasource，则默认的Datasource将不会生效。
+7.2、禁用特定的自动配置
+    使用@EnableAutoConfiguration注解的exclude属性，如下所示：
 
+    import org.springframework.boot.autoconfigure.*;
+    import org.springframework.boot.autoconfigure.jdbc.*;
+    import org.springframework.context.annotation.*;
+
+    @Configuration
+    @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+        public class MyConfiguration {
+    }
+
+    如果该类不在类路径中，可以使用注释的excludeName属性，并指定完全限定的名称。
+---------------------------------------2018-06-28---------------------------------------
+8、Spring Beans和依赖注入
+    简单期间，可以使用@ComponentScan+ @Autowired构造注入。
+    如果使用推荐的代码结构，则@ComponentScan注解会自动注册所有的components (@Component, @Service,
+@Repository, @Controller etc.)
+9、@SpringBootApplication注解
+@SpringBootApplication=@Configuration+@EnableAutoConfiguration+@ComponentScan
+10、Developer tools
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+10.1、默认属性值
+    缓存在生产中是非常有益的，但在开发过程中它可能会产生反效果，比如阻止你看到你在应用程序中所做的更改。所以
+devtools在默认情况下会禁用这些缓存选项。这些缓存选项通常配置在application.properties文件中，具体可参考
+https://github.com/spring-projects/spring-boot/blob/v1.5.4.RELEASE/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/env/DevToolsPropertyDefaultsPostProcessor.java
+10.2、自动重启
+    默认情况下，devtools会监控classpath路径，当有文件修改时会自动重启。需要注意的是，静态资产和视图模板等
+特定资源不需要重新启动。在IDEA下，构建工程 (Build -> Make Project)会触发自动重启。
+10.3、过滤资源
+    默认情况下，以下路径资源的修改不会触发重新启动，但是会触发重新加载：
+    /META-INF/maven, /META-INF/resources ,/resources ,/static ,/public or /templates
+    可以通过设置spring.devtools.restart.exclude属性定制化过滤的资源。例如只想过滤static和public路径
+    spring.devtools.restart.exclude=static/**,public/**
+    如果想要保持默认的配置，并添加额外的过滤，可以使用spring.devtools.restart.additional-exclude
+10.4、禁用重新启动
+    可以在application.properties文件中配置如下属性：spring.devtools.restart.enabled=false
+    如果要完全禁用重新启动，则：
+    public static void main(String[] args) {
+        System.setProperty("spring.devtools.restart.enabled", "false");
+        SpringApplication.run(MyApp.class, args);
+    }
+---------------------------------------2018-06-29---------------------------------------
