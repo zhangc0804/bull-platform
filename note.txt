@@ -145,3 +145,40 @@ https://github.com/spring-projects/spring-boot/blob/v1.5.4.RELEASE/spring-boot-d
         SpringApplication.run(MyApp.class, args);
     }
 ---------------------------------------2018-06-29---------------------------------------
+11、SpringApplication
+    11.1、设置banner
+    在classpath添加banner.txt文件，可以设置启动时的标语。可以借助以下工具轻松地生成banner字符串：
+    http://patorjk.com/software/taag
+    11.2、定制SpringApplication
+    有两种方式定制SpringApplication，一种是new一个SpringApplication对象，然后设置其属性，如下所示代
+码片段，设置禁用banner：
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication(MySpringConfiguration.class);
+        app.setBannerMode(Banner.Mode.OFF);
+        app.run(args);
+    }
+
+    另一种方式是使用application.properties文件。
+    11.3、在SpringApplication启动后运行一些代码
+    如果想在SpringApplication启动后运行一些特定的代码，可以实现ApplicationRunner接口或者
+CommandLineRunner接口，如果有多个，并且需要指定其执行顺序，可以实现Order接口或使用@Order注解，Order的
+顺序值越小，优先级越高。如下两个Runner，SpringApplication启动后先执行MyCommandLineRunner的run方法，
+再执行MyApplicationRunner的run方法。
+    @Order(2)
+    @Component
+    public class MyApplicationRunner implements ApplicationRunner {
+        @Override
+        public void run(ApplicationArguments args) throws Exception {
+            System.out.println("hello myrunner");
+        }
+    }
+
+    @Order(1)
+    @Component
+    public class MyCommandLineRunner implements CommandLineRunner {
+        @Override
+        public void run(String... args) throws Exception {
+            System.out.println("hello command line runner");
+        }
+    }
+---------------------------------------2018-07-02---------------------------------------
