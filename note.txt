@@ -182,3 +182,21 @@ CommandLineRunner接口，如果有多个，并且需要指定其执行顺序，
         }
     }
 ---------------------------------------2018-07-02---------------------------------------
+12、外部化配置
+    常用的外部化配置类型有：properties files,YAML files,environment variables,command-line arguments
+    外部化配置的属性值可以通过如下方式使用：使用@Value注解、实现Environment接口、使用@ConfigurationProperties注解
+    12.1、配置随机值
+        my.secret=${random.value}
+        my.number=${random.int}
+        my.bignumber=${random.long}
+        my.uuid=${random.uuid}
+        my.number.less.than.ten=${random.int(10)}
+        my.number.in.range=${random.int[1024,65536]}
+13、使用YAML代替properties（待完成）
+    YAML是一个JSON的超集，因此它可以非常方便的用于指定层次结构的格式配置数据。
+---------------------------------------2018-07-03---------------------------------------
+14.Logging
+Springboot内部使用commons logging记录日志。但是当你使用“Starters”的时候，Logback被用来记录日志。
+    14.1、日期格式
+    2014-03-05 10:57:51.112 INFO 45469 --- [ main] org.apache.catalina.core.StandardEngine :Starting Servlet Engine: Apache Tomcat/7.0.52
+    日期 时间 日志级别 进程ID ---分隔符 [线程名称] 日志记录器名称 :日志信息
