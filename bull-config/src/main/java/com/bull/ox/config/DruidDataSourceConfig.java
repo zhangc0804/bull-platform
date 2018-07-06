@@ -1,4 +1,4 @@
-package com.bull.ox.config.db;
+package com.bull.ox.config;
 
 
 import com.alibaba.druid.filter.Filter;
@@ -17,10 +17,12 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.util.CollectionUtils;
 
 import javax.sql.DataSource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 public class DruidDataSourceConfig implements EnvironmentAware {
