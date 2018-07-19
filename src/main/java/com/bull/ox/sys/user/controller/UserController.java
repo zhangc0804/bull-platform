@@ -40,4 +40,13 @@ public class UserController {
         }
         return result;
     }
+
+    @GetMapping(path = "/logout")
+    public Map logout(){
+        Map<String,Object> result = new HashMap<>();
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        result.put("msg","登出成功");
+        return result;
+    }
 }
