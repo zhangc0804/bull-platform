@@ -38,6 +38,11 @@ public class ShiroConfig {
 
         // all other paths require a logged in user
 //        chainDefinition.addPathDefinition("/**", "authc");
+
+        chainDefinition.addPathDefinition("/login","anon");
+        chainDefinition.addPathDefinition("/logout","anon");
+        chainDefinition.addPathDefinition("/static/**", "anon");
+        chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
     }
 
