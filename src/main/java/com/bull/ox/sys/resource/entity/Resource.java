@@ -5,6 +5,8 @@ public class Resource {
     private String name;
     private String identifier;
     private String url;
+    private String type;// 0、目录，1、菜单，、2：按钮
+    private Long parentId;
 
     public Long getId() {
         return id;
@@ -38,4 +40,19 @@ public class Resource {
         this.url = url;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 }
