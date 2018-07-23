@@ -9,7 +9,7 @@ public interface ResourceMapper {
     void insert(@Param("resource") Resource resource);
     @Delete("delete from resource where id=#{id}")
     void delete(@Param("id") Long id);
-    @Update("update resource r set r.name=#{resource.name},r.identifier=#{resource.identifier},r.url=#{resource.url}")
+    @Update("update resource r set r.name=#{resource.name},r.identifier=#{resource.identifier},r.url=#{resource.url} where r.id=#{resource.id}")
     void update(@Param("resource") Resource resource);
     @Select("select * from resource r where r.id=#{id}")
     Resource query(@Param("id") Long id);
