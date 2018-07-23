@@ -24,4 +24,19 @@ public class RoleService {
         return roleMapper.findRolesByUserId(userName);
     }
 
+    public void insert(Role role){
+        roleMapper.insert(role);
+    }
+
+    public void delete(Long id){
+        roleMapper.delete(id);
+    }
+
+    public void update(Role role){
+        roleMapper.update(role);
+    }
+
+    public Role query(Long id){
+        return roleMapper.query(id);
+    }
 }

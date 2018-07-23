@@ -8,15 +8,15 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping(path="/role")
 public class RoleController {
 
     @Autowired
@@ -42,6 +42,39 @@ public class RoleController {
 
         System.out.println(subject.isPermitted("user:delete"));
         System.out.println(subject.isPermitted("user:delete2"));
+        return result;
+    }
+
+    @PostMapping(path = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map insert(Role role){
+        Map<String,Object> result = new HashMap<>();
+        roleService.insert(role);
+        result.put("msg","保存成功");
+        return result;
+    }
+
+    @DeleteMapping(path = "/delete/{id}")
+    public Map delete(@PathVariable("id") Long id){
+        Map<String,Object> result = new HashMap<>();
+        roleService.delete(id);
+        result.put("msg","删除成功");
+        return result;
+    }
+
+    @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map update(Role role){
+        Map<String,Object> result = new HashMap<>();
+        roleService.update(role);
+        result.put("msg","修改成功");
+        return result;
+    }
+
+    @GetMapping(path = "/query/{id}")
+    public Map query(@PathVariable("id") Long id){
+        Map<String,Object> result = new HashMap<>();
+        Role role = roleService.query(id);
+        result.put("msg","查询成功");
+        result.put("data",role);
         return result;
     }
 }
