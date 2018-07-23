@@ -1,7 +1,6 @@
 package com.bull.ox.sys.security.realm;
 
-import com.bull.ox.sys.permission.entity.Permission;
-import com.bull.ox.sys.permission.service.PermissionService;
+import com.bull.ox.sys.resource.service.ResourceService;
 import com.bull.ox.sys.role.entity.Role;
 import com.bull.ox.sys.role.service.RoleService;
 import com.bull.ox.sys.user.entity.User;
@@ -26,7 +25,7 @@ public class SysAuthorizingRealm extends AuthorizingRealm {
     private RoleService roleService;
 
     @Autowired
-    private PermissionService permissionService;
+    private ResourceService resourceService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -36,12 +35,12 @@ public class SysAuthorizingRealm extends AuthorizingRealm {
         if(roles!=null && !roles.isEmpty()){
             for (Role role:roles) {
                 authorizationInfo.addRole(role.getName());
-                List<Permission> permissions = permissionService.findPermissionsByRoleId(role.getId());
-                if(permissions!=null && !permissions.isEmpty()){
-                    for(Permission permission : permissions){
-                        authorizationInfo.addStringPermission(permission.getDesc());
-                    }
-                }
+//                List<Permission> permissions = resourceService.findPermissionsByRoleId(role.getId());
+//                if(permissions!=null && !permissions.isEmpty()){
+//                    for(Permission permission : permissions){
+//                        authorizationInfo.addStringPermission(permission.getDesc());
+//                    }
+//                }
             }
         }
         return authorizationInfo;
