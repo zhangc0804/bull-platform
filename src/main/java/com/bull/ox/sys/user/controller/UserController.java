@@ -82,4 +82,12 @@ public class UserController {
         result.put("data",user);
         return result;
     }
+
+    @PostMapping(path = "/user/insert/role/relation")
+    public Map insertUserRoleRelations(Long userId,String roleIds){
+        Map<String,Object> result = new HashMap<>();
+        userService.insertUserRoleRelations(userId,roleIds);
+        result.put("msg","保存成功");
+        return result;
+    }
 }

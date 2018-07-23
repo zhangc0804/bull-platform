@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="bull-platform" />
-        <module name="bull-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="bull-config" target="1.8" />
       <module name="bull-parent" target="1.8" />
+      <module name="bull-sys" target="1.8" />
+      <module name="bull-web" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

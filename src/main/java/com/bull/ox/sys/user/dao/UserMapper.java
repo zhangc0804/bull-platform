@@ -19,4 +19,6 @@ public interface UserMapper {
     void update(@Param("user") User user);
     @Select("SELECT * FROM user WHERE id = #{id}")
     User query(@Param("id") Long id);
+    @Insert("insert into user_role(user_id,role_id) values(#{userId},#{roleId})")
+    void insertUserRoleRelations(@Param("userId") Long userId,@Param("roleId") Long roleId);
 }

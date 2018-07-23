@@ -37,4 +37,16 @@ public class UserService {
         return userMapper.query(id);
     }
 
+    public void insertUserRoleRelations(Long userId,String roleIds){
+        if(roleIds!=null && roleIds.length()>0){
+            String[] roleIdsStringArray = roleIds.split(",");
+            if(roleIdsStringArray!=null && roleIdsStringArray.length>0){
+                for(String roleIdStr : roleIdsStringArray){
+                    long roleId = Long.parseLong(roleIdStr);
+                    userMapper.insertUserRoleRelations(userId,roleId);
+                }
+            }
+        }
+    }
+
 }
