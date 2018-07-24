@@ -77,4 +77,12 @@ public class RoleController {
         result.put("data",role);
         return result;
     }
+
+    @PostMapping(path = "/insert/role/relation")
+    public Map insertRoleResourceRelations(Long roleId,String resourceIds){
+        Map<String,Object> result = new HashMap<>();
+        roleService.insertRoleResourceRelations(roleId,resourceIds);
+        result.put("msg","保存成功");
+        return result;
+    }
 }
