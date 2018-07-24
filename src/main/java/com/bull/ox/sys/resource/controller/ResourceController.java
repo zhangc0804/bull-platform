@@ -4,6 +4,7 @@ import com.bull.ox.sys.resource.entity.Resource;
 import com.bull.ox.sys.resource.service.ResourceService;
 import com.bull.ox.sys.role.entity.Role;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
+    @RequiresPermissions("sys:resource:create")
     @PostMapping(path = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map insert(Resource resource) {
         Map<String, Object> result = new HashMap<>();
@@ -28,6 +30,7 @@ public class ResourceController {
         return result;
     }
 
+    @RequiresPermissions("sys:resource:delete")
     @DeleteMapping(path = "/delete/{id}")
     public Map delete(@PathVariable("id") Long id) {
         Map<String, Object> result = new HashMap<>();
@@ -36,6 +39,7 @@ public class ResourceController {
         return result;
     }
 
+    @RequiresPermissions("sys:resource:update")
     @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map update(Resource resource) {
         Map<String, Object> result = new HashMap<>();
@@ -44,6 +48,7 @@ public class ResourceController {
         return result;
     }
 
+    @RequiresPermissions("sys:resource:view")
     @GetMapping(path = "/query/{id}")
     public Map query(@PathVariable("id") Long id) {
         Map<String, Object> result = new HashMap<>();
@@ -53,6 +58,7 @@ public class ResourceController {
         return result;
     }
 
+    @RequiresPermissions("sys:resource:list")
     @GetMapping(path = "/list")
     public Map list() {
         Map<String, Object> result = new HashMap<>();

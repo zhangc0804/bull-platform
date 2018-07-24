@@ -23,18 +23,7 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping(path = "/hasrole/{userId}")
-    public Map check(@PathVariable Long userId) {
-        Map result = new HashMap();
-        Subject subject = SecurityUtils.getSubject();
-        System.out.println(subject.hasRole("系统管理员"));
-        System.out.println(subject.hasRole("角色1"));
-
-        System.out.println(subject.isPermitted("user:delete"));
-        System.out.println(subject.isPermitted("user:delete2"));
-        return result;
-    }
-
+    @RequiresPermissions("sys:role:create")
     @PostMapping(path = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map insert(Role role) {
         Map<String, Object> result = new HashMap<>();
@@ -43,6 +32,7 @@ public class RoleController {
         return result;
     }
 
+    @RequiresPermissions("sys:role:delete")
     @DeleteMapping(path = "/delete/{id}")
     public Map delete(@PathVariable("id") Long id) {
         Map<String, Object> result = new HashMap<>();
@@ -51,6 +41,7 @@ public class RoleController {
         return result;
     }
 
+    @RequiresPermissions("sys:role:update")
     @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map update(Role role) {
         Map<String, Object> result = new HashMap<>();
@@ -59,6 +50,7 @@ public class RoleController {
         return result;
     }
 
+    @RequiresPermissions("sys:role:view")
     @GetMapping(path = "/query/{id}")
     public Map query(@PathVariable("id") Long id) {
         Map<String, Object> result = new HashMap<>();
@@ -76,6 +68,7 @@ public class RoleController {
         return result;
     }
 
+    @RequiresPermissions("sys:role:list")
     @GetMapping(path = "/list")
     public Map list() {
         Map<String, Object> result = new HashMap<>();

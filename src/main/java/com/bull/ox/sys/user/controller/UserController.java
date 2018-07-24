@@ -8,6 +8,7 @@ import com.bull.ox.sys.user.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -47,6 +48,7 @@ public class UserController {
         return result;
     }
 
+    @RequiresPermissions("sys:user:create")
     @PostMapping(path = "/user/insert", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map insert(User user) {
         Map<String, Object> result = new HashMap<>();
@@ -55,6 +57,7 @@ public class UserController {
         return result;
     }
 
+    @RequiresPermissions("sys:user:delete")
     @DeleteMapping(path = "/user/delete/{id}")
     public Map delete(@PathVariable("id") Long id) {
         Map<String, Object> result = new HashMap<>();
@@ -63,6 +66,7 @@ public class UserController {
         return result;
     }
 
+    @RequiresPermissions("sys:user:update")
     @PutMapping(path = "/user/update", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map update(User user) {
         Map<String, Object> result = new HashMap<>();
@@ -71,6 +75,7 @@ public class UserController {
         return result;
     }
 
+    @RequiresPermissions("sys:user:view")
     @GetMapping(path = "/user/query/{id}")
     public Map query(@PathVariable("id") Long id) {
         Map<String, Object> result = new HashMap<>();
@@ -88,6 +93,7 @@ public class UserController {
         return result;
     }
 
+    @RequiresPermissions("sys:user:list")
     @GetMapping(path = "/user/list")
     public Map list() {
         Map<String, Object> result = new HashMap<>();
