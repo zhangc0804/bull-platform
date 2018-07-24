@@ -24,4 +24,6 @@ public interface RoleMapper {
     Role query(@Param("id") Long id);
     @Insert("insert into role_resource(role_id,resource_id) values(#{roleId},#{resourceId})")
     void insertRoleResourceRelations(@Param("roleId") Long roleId,@Param("resourceId") Long resourceId);
+    @Select("select * from role")
+    List<Role> list();
 }

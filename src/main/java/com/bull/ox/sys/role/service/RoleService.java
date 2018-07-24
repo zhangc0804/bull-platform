@@ -51,4 +51,8 @@ public class RoleService {
             }
         }
     }
+
+    public List<Role> list(){
+        return roleMapper.list();
+    }
 }

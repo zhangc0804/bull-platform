@@ -2,6 +2,7 @@ package com.bull.ox.sys.resource.controller;
 
 import com.bull.ox.sys.resource.entity.Resource;
 import com.bull.ox.sys.resource.service.ResourceService;
+import com.bull.ox.sys.role.entity.Role;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -48,6 +50,15 @@ public class ResourceController {
         Resource resource = resourceService.query(id);
         result.put("msg","查询成功");
         result.put("data",resource);
+        return result;
+    }
+
+    @GetMapping(path = "/list")
+    public Map list(){
+        Map<String,Object> result = new HashMap<>();
+        List<Resource> resources = resourceService.list();
+        result.put("msg","保存成功");
+        result.put("datas",resources);
         return result;
     }
 }

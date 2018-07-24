@@ -85,4 +85,13 @@ public class RoleController {
         result.put("msg","保存成功");
         return result;
     }
+
+    @GetMapping(path = "/list")
+    public Map list(){
+        Map<String,Object> result = new HashMap<>();
+        List<Role> roles = roleService.list();
+        result.put("msg","保存成功");
+        result.put("datas",roles);
+        return result;
+    }
 }

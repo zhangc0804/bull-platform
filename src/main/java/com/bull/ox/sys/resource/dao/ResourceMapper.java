@@ -1,7 +1,10 @@
 package com.bull.ox.sys.resource.dao;
 
 import com.bull.ox.sys.resource.entity.Resource;
+import com.bull.ox.sys.role.entity.Role;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface ResourceMapper {
@@ -13,4 +16,6 @@ public interface ResourceMapper {
     void update(@Param("resource") Resource resource);
     @Select("select * from resource r where r.id=#{id}")
     Resource query(@Param("id") Long id);
+    @Select("select * from resource")
+    List<Resource> list();
 }

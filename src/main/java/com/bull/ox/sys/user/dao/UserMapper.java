@@ -3,6 +3,8 @@ package com.bull.ox.sys.user.dao;
 import com.bull.ox.sys.user.entity.User;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
     @Select("SELECT * FROM user WHERE id = #{id}")
@@ -21,4 +23,6 @@ public interface UserMapper {
     User query(@Param("id") Long id);
     @Insert("insert into user_role(user_id,role_id) values(#{userId},#{roleId})")
     void insertUserRoleRelations(@Param("userId") Long userId,@Param("roleId") Long roleId);
+    @Select("select * from user")
+    List<User> list();
 }

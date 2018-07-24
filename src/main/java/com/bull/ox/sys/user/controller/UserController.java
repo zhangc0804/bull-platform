@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -88,6 +89,15 @@ public class UserController {
         Map<String,Object> result = new HashMap<>();
         userService.insertUserRoleRelations(userId,roleIds);
         result.put("msg","保存成功");
+        return result;
+    }
+
+    @GetMapping(path = "/user/list")
+    public Map list(){
+        Map<String,Object> result = new HashMap<>();
+        List<User> users = userService.list();
+        result.put("msg","保存成功");
+        result.put("datas",users);
         return result;
     }
 }
