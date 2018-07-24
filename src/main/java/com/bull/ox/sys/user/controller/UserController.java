@@ -2,6 +2,7 @@ package com.bull.ox.sys.user.controller;
 
 import com.bull.ox.sys.resource.entity.Resource;
 import com.bull.ox.sys.resource.service.ResourceService;
+import com.bull.ox.sys.role.entity.Role;
 import com.bull.ox.sys.user.entity.User;
 import com.bull.ox.sys.user.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -23,81 +24,85 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "/user/{id}")
-    public User findById(@PathVariable Long id){
-        return userService.findById(id);
-    }
-
     @GetMapping(path = "/login")
-    public Map login(@RequestParam String username, @RequestParam String password){
-        Map<String,Object> result = new HashMap<>();
+    public Map login(@RequestParam String username, @RequestParam String password) {
+        Map<String, Object> result = new HashMap<>();
         Subject subject = SecurityUtils.getSubject();
-        try{
-            UsernamePasswordToken token = new UsernamePasswordToken(username,password.toCharArray());
+        try {
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password.toCharArray());
             subject.login(token);
-            result.put("msg","登录成功");
-        }catch(AuthenticationException authenticationException){
-            result.put("msg","用户名或密码错误");
+            result.put("msg", "登录成功");
+        } catch (AuthenticationException authenticationException) {
+            result.put("msg", "用户名或密码错误");
         }
         return result;
     }
 
     @GetMapping(path = "/logout")
-    public Map logout(){
-        Map<String,Object> result = new HashMap<>();
+    public Map logout() {
+        Map<String, Object> result = new HashMap<>();
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        result.put("msg","登出成功");
+        result.put("msg", "登出成功");
         return result;
     }
 
     @PostMapping(path = "/user/insert", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map insert(User user){
-        Map<String,Object> result = new HashMap<>();
+    public Map insert(User user) {
+        Map<String, Object> result = new HashMap<>();
         userService.insert(user);
-        result.put("msg","保存成功");
+        result.put("msg", "保存成功");
         return result;
     }
 
     @DeleteMapping(path = "/user/delete/{id}")
-    public Map delete(@PathVariable("id") Long id){
-        Map<String,Object> result = new HashMap<>();
+    public Map delete(@PathVariable("id") Long id) {
+        Map<String, Object> result = new HashMap<>();
         userService.delete(id);
-        result.put("msg","删除成功");
+        result.put("msg", "删除成功");
         return result;
     }
 
     @PutMapping(path = "/user/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map update(User user){
-        Map<String,Object> result = new HashMap<>();
+    public Map update(User user) {
+        Map<String, Object> result = new HashMap<>();
         userService.update(user);
-        result.put("msg","修改成功");
+        result.put("msg", "修改成功");
         return result;
     }
 
     @GetMapping(path = "/user/query/{id}")
-    public Map query(@PathVariable("id") Long id){
-        Map<String,Object> result = new HashMap<>();
+    public Map query(@PathVariable("id") Long id) {
+        Map<String, Object> result = new HashMap<>();
         User user = userService.query(id);
-        result.put("msg","查询成功");
-        result.put("data",user);
+        result.put("msg", "查询成功");
+        result.put("data", user);
         return result;
     }
 
     @PostMapping(path = "/user/insert/role/relation")
-    public Map insertUserRoleRelations(Long userId,String roleIds){
-        Map<String,Object> result = new HashMap<>();
-        userService.insertUserRoleRelations(userId,roleIds);
-        result.put("msg","保存成功");
+    public Map insertUserRoleRelations(Long userId, String roleIds) {
+        Map<String, Object> result = new HashMap<>();
+        userService.insertUserRoleRelations(userId, roleIds);
+        result.put("msg", "保存成功");
         return result;
     }
 
     @GetMapping(path = "/user/list")
-    public Map list(){
-        Map<String,Object> result = new HashMap<>();
+    public Map list() {
+        Map<String, Object> result = new HashMap<>();
         List<User> users = userService.list();
-        result.put("msg","保存成功");
-        result.put("datas",users);
+        result.put("msg", "查询列表成功");
+        result.put("datas", users);
+        return result;
+    }
+
+    @GetMapping(path = "/user/roles")
+    public Map findRolesByUsername(@RequestParam String username) {
+        Map<String, Object> result = new HashMap<>();
+        List<Role> roles = userService.findRolesByUsername(username);
+        result.put("msg", "查询角色成功");
+        result.put("datas", roles);
         return result;
     }
 }

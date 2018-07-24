@@ -1,5 +1,6 @@
 package com.bull.ox.sys.role.controller;
 
+import com.bull.ox.sys.resource.entity.Resource;
 import com.bull.ox.sys.role.entity.Role;
 import com.bull.ox.sys.role.service.RoleService;
 import com.bull.ox.sys.user.entity.User;
@@ -16,25 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/role")
+@RequestMapping(path = "/role")
 public class RoleController {
 
     @Autowired
     private RoleService roleService;
 
-    @GetMapping(path = "/role/{id}")
-    public Role findById(@PathVariable Long id){
-        return roleService.findById(id);
-    }
-
-    @RequiresPermissions("user:create")
-    @GetMapping(path = "/roles/{userName}")
-    public List<Role> findRolesByUserId(@PathVariable String userName){
-        return roleService.findRolesByUserId(userName);
-    }
-
     @GetMapping(path = "/hasrole/{userId}")
-    public Map check(@PathVariable Long userId){
+    public Map check(@PathVariable Long userId) {
         Map result = new HashMap();
         Subject subject = SecurityUtils.getSubject();
         System.out.println(subject.hasRole("系统管理员"));
@@ -46,52 +36,61 @@ public class RoleController {
     }
 
     @PostMapping(path = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map insert(Role role){
-        Map<String,Object> result = new HashMap<>();
+    public Map insert(Role role) {
+        Map<String, Object> result = new HashMap<>();
         roleService.insert(role);
-        result.put("msg","保存成功");
+        result.put("msg", "保存成功");
         return result;
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public Map delete(@PathVariable("id") Long id){
-        Map<String,Object> result = new HashMap<>();
+    public Map delete(@PathVariable("id") Long id) {
+        Map<String, Object> result = new HashMap<>();
         roleService.delete(id);
-        result.put("msg","删除成功");
+        result.put("msg", "删除成功");
         return result;
     }
 
     @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map update(Role role){
-        Map<String,Object> result = new HashMap<>();
+    public Map update(Role role) {
+        Map<String, Object> result = new HashMap<>();
         roleService.update(role);
-        result.put("msg","修改成功");
+        result.put("msg", "修改成功");
         return result;
     }
 
     @GetMapping(path = "/query/{id}")
-    public Map query(@PathVariable("id") Long id){
-        Map<String,Object> result = new HashMap<>();
+    public Map query(@PathVariable("id") Long id) {
+        Map<String, Object> result = new HashMap<>();
         Role role = roleService.query(id);
-        result.put("msg","查询成功");
-        result.put("data",role);
+        result.put("msg", "查询成功");
+        result.put("data", role);
         return result;
     }
 
     @PostMapping(path = "/insert/role/relation")
-    public Map insertRoleResourceRelations(Long roleId,String resourceIds){
-        Map<String,Object> result = new HashMap<>();
-        roleService.insertRoleResourceRelations(roleId,resourceIds);
-        result.put("msg","保存成功");
+    public Map insertRoleResourceRelations(Long roleId, String resourceIds) {
+        Map<String, Object> result = new HashMap<>();
+        roleService.insertRoleResourceRelations(roleId, resourceIds);
+        result.put("msg", "保存成功");
         return result;
     }
 
     @GetMapping(path = "/list")
-    public Map list(){
-        Map<String,Object> result = new HashMap<>();
+    public Map list() {
+        Map<String, Object> result = new HashMap<>();
         List<Role> roles = roleService.list();
-        result.put("msg","保存成功");
-        result.put("datas",roles);
+        result.put("msg", "保存成功");
+        result.put("datas", roles);
+        return result;
+    }
+
+    @GetMapping(path = "/role/{id}/resources")
+    public Map findResourcesByRoleId(@PathVariable Long id) {
+        Map<String, Object> result = new HashMap<>();
+        List<Resource> resources = roleService.findResourcesByRoleId(id);
+        result.put("msg", "查询资源成功");
+        result.put("datas", resources);
         return result;
     }
 }

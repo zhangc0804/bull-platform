@@ -14,23 +14,23 @@ public class ResourceService {
     @Autowired
     private ResourceMapper resourceMapper;
 
-    public void insert(Resource resource){
+    public void insert(Resource resource) {
         resourceMapper.insert(resource);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         resourceMapper.delete(id);
     }
 
-    public void update(Resource resource){
+    public void update(Resource resource) {
         resourceMapper.update(resource);
     }
 
-    public Resource query(Long id){
+    public Resource query(Long id) {
         return resourceMapper.query(id);
     }
 
-    public List<Resource> list(){
+    public List<Resource> list() {
         return resourceMapper.list();
     }
 }

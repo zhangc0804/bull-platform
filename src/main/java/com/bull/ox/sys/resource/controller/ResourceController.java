@@ -21,44 +21,44 @@ public class ResourceController {
     private ResourceService resourceService;
 
     @PostMapping(path = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map insert(Resource resource){
-        Map<String,Object> result = new HashMap<>();
+    public Map insert(Resource resource) {
+        Map<String, Object> result = new HashMap<>();
         resourceService.insert(resource);
-        result.put("msg","保存成功");
+        result.put("msg", "保存成功");
         return result;
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public Map delete(@PathVariable("id") Long id){
-        Map<String,Object> result = new HashMap<>();
+    public Map delete(@PathVariable("id") Long id) {
+        Map<String, Object> result = new HashMap<>();
         resourceService.delete(id);
-        result.put("msg","删除成功");
+        result.put("msg", "删除成功");
         return result;
     }
 
     @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map update(Resource resource){
-        Map<String,Object> result = new HashMap<>();
+    public Map update(Resource resource) {
+        Map<String, Object> result = new HashMap<>();
         resourceService.update(resource);
-        result.put("msg","修改成功");
+        result.put("msg", "修改成功");
         return result;
     }
 
     @GetMapping(path = "/query/{id}")
-    public Map query(@PathVariable("id") Long id){
-        Map<String,Object> result = new HashMap<>();
+    public Map query(@PathVariable("id") Long id) {
+        Map<String, Object> result = new HashMap<>();
         Resource resource = resourceService.query(id);
-        result.put("msg","查询成功");
-        result.put("data",resource);
+        result.put("msg", "查询成功");
+        result.put("data", resource);
         return result;
     }
 
     @GetMapping(path = "/list")
-    public Map list(){
-        Map<String,Object> result = new HashMap<>();
+    public Map list() {
+        Map<String, Object> result = new HashMap<>();
         List<Resource> resources = resourceService.list();
-        result.put("msg","保存成功");
-        result.put("datas",resources);
+        result.put("msg", "保存成功");
+        result.put("datas", resources);
         return result;
     }
 }

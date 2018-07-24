@@ -1,5 +1,6 @@
 package com.bull.ox.sys.role.service;
 
+import com.bull.ox.sys.resource.entity.Resource;
 import com.bull.ox.sys.role.dao.RoleMapper;
 import com.bull.ox.sys.role.entity.Role;
 import com.bull.ox.sys.user.dao.UserMapper;
@@ -16,43 +17,39 @@ public class RoleService {
     @Autowired
     private RoleMapper roleMapper;
 
-    public Role findById(Long id){
-        return roleMapper.findById(id);
-    }
-
-    public List<Role> findRolesByUserId(String userName){
-        return roleMapper.findRolesByUserId(userName);
-    }
-
-    public void insert(Role role){
+    public void insert(Role role) {
         roleMapper.insert(role);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         roleMapper.delete(id);
     }
 
-    public void update(Role role){
+    public void update(Role role) {
         roleMapper.update(role);
     }
 
-    public Role query(Long id){
+    public Role query(Long id) {
         return roleMapper.query(id);
     }
 
-    public void insertRoleResourceRelations(Long roleId,String resourceIds){
-        if(resourceIds!=null && resourceIds.length()>0){
+    public void insertRoleResourceRelations(Long roleId, String resourceIds) {
+        if (resourceIds != null && resourceIds.length() > 0) {
             String[] resourceIdsStringArray = resourceIds.split(",");
-            if(resourceIdsStringArray!=null && resourceIdsStringArray.length>0){
-                for(String resourceIdStr : resourceIdsStringArray){
+            if (resourceIdsStringArray != null && resourceIdsStringArray.length > 0) {
+                for (String resourceIdStr : resourceIdsStringArray) {
                     long resourceId = Long.parseLong(resourceIdStr);
-                    roleMapper.insertRoleResourceRelations(roleId,resourceId);
+                    roleMapper.insertRoleResourceRelations(roleId, resourceId);
                 }
             }
         }
     }
 
-    public List<Role> list(){
+    public List<Role> list() {
         return roleMapper.list();
+    }
+
+    public List<Resource> findResourcesByRoleId(Long roleId) {
+        return roleMapper.findResourcesByRoleId(roleId);
     }
 }

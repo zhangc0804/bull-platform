@@ -17,12 +17,12 @@ public class ShiroConfig {
     private SysAuthorizingRealm sysAuthorizingRealm;
 
     @Bean
-    public Realm realm(){
+    public Realm realm() {
         return sysAuthorizingRealm;
     }
 
     @Bean
-    public Authorizer authorizer(){
+    public Authorizer authorizer() {
         return sysAuthorizingRealm;
     }
 
@@ -39,16 +39,16 @@ public class ShiroConfig {
         // all other paths require a logged in user
 //        chainDefinition.addPathDefinition("/**", "authc");
 
-        chainDefinition.addPathDefinition("/login","anon");
-        chainDefinition.addPathDefinition("/logout","anon");
+        chainDefinition.addPathDefinition("/login", "anon");
+        chainDefinition.addPathDefinition("/logout", "anon");
         chainDefinition.addPathDefinition("/static/**", "anon");
 
-        chainDefinition.addPathDefinition("/swagger-ui.html","anon");
-        chainDefinition.addPathDefinition("/swagger-resources/**","anon");
-        chainDefinition.addPathDefinition("/v2/api-docs","anon");
-        chainDefinition.addPathDefinition("/webjars/springfox-swagger-ui/**","anon");
+        chainDefinition.addPathDefinition("/swagger-ui.html", "anon");
+        chainDefinition.addPathDefinition("/swagger-resources/**", "anon");
+        chainDefinition.addPathDefinition("/v2/api-docs", "anon");
+        chainDefinition.addPathDefinition("/webjars/springfox-swagger-ui/**", "anon");
 
-        chainDefinition.addPathDefinition("/druid/**","anon");
+        chainDefinition.addPathDefinition("/druid/**", "anon");
 
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
