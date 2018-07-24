@@ -46,7 +46,7 @@ public class RoleService {
             if(resourceIdsStringArray!=null && resourceIdsStringArray.length>0){
                 for(String resourceIdStr : resourceIdsStringArray){
                     long resourceId = Long.parseLong(resourceIdStr);
-                    roleMapper.insertRoleResourceRelations(resourceId,roleId);
+                    roleMapper.insertRoleResourceRelations(roleId,resourceId);
                 }
             }
         }
