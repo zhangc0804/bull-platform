@@ -1,15 +1,20 @@
 package com.bull.ox.sys.security.realm;
 
+import com.bull.ox.common.EncryptUtils;
 import com.bull.ox.sys.resource.entity.Resource;
 import com.bull.ox.sys.role.entity.Role;
 import com.bull.ox.sys.role.service.RoleService;
 import com.bull.ox.sys.user.entity.User;
 import com.bull.ox.sys.user.service.UserService;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.codec.Hex;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -57,13 +62,23 @@ public class SysAuthorizingRealm extends AuthorizingRealm {
         if (token instanceof UsernamePasswordToken) {
             UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
             String username = usernamePasswordToken.getUsername();
-            char[] password = usernamePasswordToken.getPassword();
-            User user = userService.findByUsernamePassword(username, new String(password));
+//            char[] password = usernamePasswordToken.getPassword();
+            User user = userService.findByUsername(username);
             if (user != null) {
-                SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, password, this.getName());
+//                SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, password, this.getName());
+                byte[] salt = Hex.decode(user.getSalt());
+                SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(),ByteSource.Util.bytes(salt),this.getName());
                 authenticationInfo = simpleAuthenticationInfo;
             }
         }
         return authenticationInfo;
+    }
+
+    @Override
+    public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        hashedCredentialsMatcher.setHashAlgorithmName(EncryptUtils.HASH_ALGORITHM);
+        hashedCredentialsMatcher.setHashIterations(EncryptUtils.HASH_INTERATIONS);
+        super.setCredentialsMatcher(hashedCredentialsMatcher);
     }
 }

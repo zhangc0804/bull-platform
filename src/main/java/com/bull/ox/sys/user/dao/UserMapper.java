@@ -32,4 +32,7 @@ public interface UserMapper {
     @Select("select r.* from user u left join user_role ur on ur.user_id=u.id left join role r on r.id=ur.role_id where u.username=#{username}")
     List<Role> findRolesByUsername(@Param("username") String username);
 
+    @Select("SELECT * FROM user WHERE username = #{username}")
+    User findByUsername(@Param("username") String username);
+
 }

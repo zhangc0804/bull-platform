@@ -61,4 +61,8 @@ public class UserService {
         return userMapper.findRolesByUsername(username);
     }
 
+    public User findByUsername(String username) {
+        return userMapper.findByUsername(username);
+    }
+
 }
