@@ -11,7 +11,7 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE username = #{username} and password= #{password}")
     User findByUsernamePassword(@Param("username") String username, @Param("password") String password);
 
-    @Insert("insert into user(username,password,name) values(#{user.username},#{user.password},#{user.name})")
+    @Insert("insert into user(username,password,name,salt) values(#{user.username},#{user.password},#{user.name},#{user.salt})")
     void insert(@Param("user") User user);
 
     @Delete("delete from user where id=#{id}")

@@ -1,10 +1,12 @@
 package com.bull.ox.sys.user.service;
 
+import com.bull.ox.common.EncryptUtils;
 import com.bull.ox.sys.resource.entity.Resource;
 import com.bull.ox.sys.role.entity.Role;
 import com.bull.ox.sys.user.dao.UserMapper;
 import com.bull.ox.sys.user.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.codec.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,9 @@ public class UserService {
     }
 
     public void insert(User user) {
+        byte[] salt = EncryptUtils.generateSalt();
+        user.setSalt(Hex.encodeToString(salt));
+        user.setPassword(EncryptUtils.encryptPassword(user.getPassword(),salt));
         userMapper.insert(user);
     }
 
