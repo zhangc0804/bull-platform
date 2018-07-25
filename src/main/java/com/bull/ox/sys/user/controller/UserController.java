@@ -111,4 +111,13 @@ public class UserController {
         result.put("datas", roles);
         return result;
     }
+
+//    @RequiresPermissions("sys:user:update-password")
+    @PutMapping(path = "/user/update-password", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map update(Long userId,String password) {
+        Map<String, Object> result = new HashMap<>();
+        userService.updatePassword(userId,password);
+        result.put("msg", "修改成功");
+        return result;
+    }
 }

@@ -65,4 +65,12 @@ public class UserService {
         return userMapper.findByUsername(username);
     }
 
+    public void updatePassword(Long userId,String password){
+        User user = userMapper.query(userId);
+        byte[] salt = EncryptUtils.generateSalt();
+        user.setSalt(Hex.encodeToString(salt));
+        user.setPassword(EncryptUtils.encryptPassword(user.getPassword(),salt));
+        userMapper.update(user);
+    }
+
 }

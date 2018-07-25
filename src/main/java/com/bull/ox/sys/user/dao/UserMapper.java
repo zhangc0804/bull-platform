@@ -17,7 +17,7 @@ public interface UserMapper {
     @Delete("delete from user where id=#{id}")
     void delete(@Param("id") Long id);
 
-    @Update("update user u set u.username=#{user.username},u.password=#{user.password},u.name=#{user.name} where u.id=#{user.id}")
+    @Update("update user u set u.username=#{user.username},u.password=#{user.password},u.name=#{user.name},u.salt=#{user.salt} where u.id=#{user.id}")
     void update(@Param("user") User user);
 
     @Select("SELECT * FROM user WHERE id = #{id}")
