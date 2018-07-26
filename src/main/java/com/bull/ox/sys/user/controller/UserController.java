@@ -120,4 +120,12 @@ public class UserController {
         result.put("msg", "修改成功");
         return result;
     }
+
+    @GetMapping(path = "/hello",consumes = "application/json;charset=UTF-8")
+    public Map hello(UserVo userVo) {
+        Map<String, Object> result = new HashMap<>();
+        System.out.println(userVo.getUsername());
+        result.put("msg", "登录成功");
+        return result;
+    }
 }
