@@ -41,13 +41,22 @@ public class ShiroConfig {
 
         chainDefinition.addPathDefinition("/login", "anon");
         chainDefinition.addPathDefinition("/logout", "anon");
-        chainDefinition.addPathDefinition("/static/**", "anon");
 
+        // 静态资源
+        chainDefinition.addPathDefinition("/framework/**", "anon");
+        chainDefinition.addPathDefinition("/css/**", "anon");
+        chainDefinition.addPathDefinition("/html/**", "anon");
+        chainDefinition.addPathDefinition("/image/**", "anon");
+        chainDefinition.addPathDefinition("/js/**", "anon");
+        chainDefinition.addPathDefinition("/test/**", "anon");
+
+        // swagger
         chainDefinition.addPathDefinition("/swagger-ui.html", "anon");
         chainDefinition.addPathDefinition("/swagger-resources/**", "anon");
         chainDefinition.addPathDefinition("/v2/api-docs", "anon");
         chainDefinition.addPathDefinition("/webjars/springfox-swagger-ui/**", "anon");
 
+        // druid
         chainDefinition.addPathDefinition("/druid/**", "anon");
 
         chainDefinition.addPathDefinition("/**", "authc");
