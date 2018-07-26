@@ -69,7 +69,7 @@ public class UserService {
         User user = userMapper.query(userId);
         byte[] salt = EncryptUtils.generateSalt();
         user.setSalt(Hex.encodeToString(salt));
-        user.setPassword(EncryptUtils.encryptPassword(user.getPassword(),salt));
+        user.setPassword(EncryptUtils.encryptPassword(password,salt));
         userMapper.update(user);
     }
 

@@ -62,10 +62,8 @@ public class SysAuthorizingRealm extends AuthorizingRealm {
         if (token instanceof UsernamePasswordToken) {
             UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
             String username = usernamePasswordToken.getUsername();
-//            char[] password = usernamePasswordToken.getPassword();
             User user = userService.findByUsername(username);
             if (user != null) {
-//                SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, password, this.getName());
                 byte[] salt = Hex.decode(user.getSalt());
                 SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(),ByteSource.Util.bytes(salt),this.getName());
                 authenticationInfo = simpleAuthenticationInfo;
