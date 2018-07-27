@@ -4,8 +4,10 @@ import com.bull.ox.common.EncryptUtils;
 import com.bull.ox.sys.resource.entity.Resource;
 import com.bull.ox.sys.role.entity.Role;
 import com.bull.ox.sys.role.service.RoleService;
+import com.bull.ox.sys.security.exception.KaptchaException;
 import com.bull.ox.sys.user.entity.User;
 import com.bull.ox.sys.user.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -17,6 +19,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.bull.ox.sys.security.token.UsernamePasswordToken;
 
 import java.util.HashSet;
 import java.util.List;
@@ -61,6 +65,13 @@ public class SysAuthorizingRealm extends AuthorizingRealm {
         AuthenticationInfo authenticationInfo = null;
         if (token instanceof UsernamePasswordToken) {
             UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
+            Object kaptcha = SecurityUtils.getSubject().getSession().getAttribute("vrifyCode");
+            if(kaptcha==null){
+                throw new KaptchaException("验证码已过期");
+            }
+            if(!usernamePasswordToken.getKaptcha().equals(kaptcha.toString())){
+                throw new KaptchaException("验证码不正确");
+            }
             String username = usernamePasswordToken.getUsername();
             User user = userService.findByUsername(username);
             if (user != null) {

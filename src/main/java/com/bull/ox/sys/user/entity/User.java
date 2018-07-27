@@ -6,6 +6,7 @@ public class User {
     private String password;
     private String name;
     private String salt;
+    private String kaptcha;
 
     public Long getId() {
         return id;
@@ -45,5 +46,13 @@ public class User {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getKaptcha() {
+        return kaptcha;
+    }
+
+    public void setKaptcha(String kaptcha) {
+        this.kaptcha = kaptcha;
     }
 }

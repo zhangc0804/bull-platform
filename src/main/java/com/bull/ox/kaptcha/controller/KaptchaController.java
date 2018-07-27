@@ -1,6 +1,7 @@
 package com.bull.ox.kaptcha.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class KaptchaController {
             //生产验证码字符串并保存到session中
             String createText = defaultKaptcha.createText();
             httpServletRequest.getSession().setAttribute("vrifyCode", createText);
+            SecurityUtils.getSubject().getSession().setAttribute("vrifyCode",createText);
             //使用生产的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中
             BufferedImage challenge = defaultKaptcha.createImage(createText);
             ImageIO.write(challenge, "jpg", jpegOutputStream);

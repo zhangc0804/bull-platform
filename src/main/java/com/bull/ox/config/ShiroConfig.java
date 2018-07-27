@@ -40,6 +40,7 @@ public class ShiroConfig {
 //        chainDefinition.addPathDefinition("/**", "authc");
 
         chainDefinition.addPathDefinition("/login", "anon");
+        chainDefinition.addPathDefinition("/login/kaptcha", "anon");
         chainDefinition.addPathDefinition("/logout", "anon");
 
         // 静态资源
@@ -58,6 +59,9 @@ public class ShiroConfig {
 
         // druid
         chainDefinition.addPathDefinition("/druid/**", "anon");
+
+        // 验证码
+        chainDefinition.addPathDefinition("/kaptcha/generate-kaptcha", "anon");
 
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
