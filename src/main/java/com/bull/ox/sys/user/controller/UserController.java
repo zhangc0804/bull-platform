@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -139,6 +143,20 @@ public class UserController {
     public Map hello(UserVo userVo) {
         Map<String, Object> result = new HashMap<>();
         System.out.println(userVo.getUsername());
+        result.put("msg", "登录成功");
+        return result;
+    }
+
+    @GetMapping(path = "/test/session")
+    public Map testSession(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> result = new HashMap<>();
+        Cookie cookie = new Cookie("key1","value1");
+        response.addCookie(cookie);
+
+        HttpSession session = request.getSession();
+        System.out.println(session.isNew());
+        System.out.println(session.getMaxInactiveInterval());
+        session.setAttribute("key111","value111");
         result.put("msg", "登录成功");
         return result;
     }
