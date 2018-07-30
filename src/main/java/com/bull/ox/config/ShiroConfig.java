@@ -61,7 +61,7 @@ public class ShiroConfig {
 //        chainDefinition.addPathDefinition("/**", "authc");
 
         //配置记住我或认证通过可以访问的地址
-        chainDefinition.addPathDefinition("/", "user");
+//        chainDefinition.addPathDefinition("/", "user");
 
         chainDefinition.addPathDefinition("/login", "anon");
         chainDefinition.addPathDefinition("/login/kaptcha", "anon");

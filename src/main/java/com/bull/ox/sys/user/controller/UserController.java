@@ -44,7 +44,8 @@ public class UserController {
         Map<String, Object> result = new HashMap<>();
         Subject subject = SecurityUtils.getSubject();
         try {
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password,kaptcha,null,rememberMe);
+//            UsernamePasswordToken token = new UsernamePasswordToken(username, password,kaptcha,null,rememberMe);
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password,kaptcha);
             subject.login(token);
             result.put("msg", "登录成功");
         } catch (AuthenticationException authenticationException) {
