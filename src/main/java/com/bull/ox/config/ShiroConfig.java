@@ -2,6 +2,7 @@ package com.bull.ox.config;
 
 import com.bull.ox.sys.security.realm.SysAuthorizingRealm;
 import org.apache.shiro.authz.Authorizer;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.TextConfigurationRealm;
@@ -9,6 +10,7 @@ import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.ehcache.integrations.shiro.EhcacheShiroManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -89,6 +91,11 @@ public class ShiroConfig {
 
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
+    }
+
+    @Bean
+    public CacheManager cacheManager(){
+        return new EhcacheShiroManager();
     }
 
 }
