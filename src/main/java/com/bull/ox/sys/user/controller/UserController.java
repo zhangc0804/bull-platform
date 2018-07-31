@@ -44,10 +44,11 @@ public class UserController {
     }
 
     @GetMapping(path = "/login/kaptcha")
-    public Map login(@RequestParam String username, @RequestParam String password, @RequestParam String kaptcha) {
+    public Map login(@RequestParam String username, @RequestParam String password, @RequestParam String kaptcha,@RequestParam(required = false) boolean rememberMe) {
         Map<String, Object> result = new HashMap<>();
         Subject subject = SecurityUtils.getSubject();
         try {
+//            UsernamePasswordToken token = new UsernamePasswordToken(username, password,kaptcha,null,rememberMe);
             UsernamePasswordToken token = new UsernamePasswordToken(username, password,kaptcha);
             subject.login(token);
             result.put("msg", "登录成功");

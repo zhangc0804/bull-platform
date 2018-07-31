@@ -2,10 +2,15 @@ package com.bull.ox.config;
 
 import com.bull.ox.sys.security.realm.SysAuthorizingRealm;
 import org.apache.shiro.authz.Authorizer;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.TextConfigurationRealm;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.ehcache.integrations.shiro.EhcacheShiroManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +31,24 @@ public class ShiroConfig {
         return sysAuthorizingRealm;
     }
 
+//    @Bean
+//    public SimpleCookie simpleCookie(){
+//        //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
+//        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+//        //记住我cookie生效时间30天 ,单位秒
+//        simpleCookie.setMaxAge(30*24*60*60);
+//        return simpleCookie;
+//    }
+//
+//    @Bean("rememberMeManager")
+//    public CookieRememberMeManager cookieRememberMeManager(){
+//        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+//        cookieRememberMeManager.setCookie(simpleCookie());
+//        //rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
+//        cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
+//        return cookieRememberMeManager;
+//    }
+
     @Bean
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
@@ -38,6 +61,9 @@ public class ShiroConfig {
 
         // all other paths require a logged in user
 //        chainDefinition.addPathDefinition("/**", "authc");
+
+        //配置记住我或认证通过可以访问的地址
+//        chainDefinition.addPathDefinition("/", "user");
 
         chainDefinition.addPathDefinition("/login", "anon");
         chainDefinition.addPathDefinition("/login/kaptcha", "anon");
@@ -65,6 +91,11 @@ public class ShiroConfig {
 
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
+    }
+
+    @Bean
+    public CacheManager cacheManager(){
+        return new EhcacheShiroManager();
     }
 
 }
