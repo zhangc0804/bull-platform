@@ -83,6 +83,11 @@
             <version>3.5.2</version>
         </dependency>
         <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.ehcache.integrations.shiro</groupId>
             <artifactId>shiro-ehcache3</artifactId>
             <version>1.0.0</version>
@@ -92,6 +97,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
