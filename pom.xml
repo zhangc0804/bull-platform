@@ -9,4 +9,8 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>bull-web</module>
+    </modules>
+
 </project>
