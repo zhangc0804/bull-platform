@@ -12,6 +12,7 @@
 
     <groupId>com.bull</groupId>
     <artifactId>bull-web</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
     <name>bull-web</name>
 
